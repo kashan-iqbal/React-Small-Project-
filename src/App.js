@@ -3,15 +3,17 @@ import './App.css';
 // import StarRatting from './Component/Ratting/StarRatting';
 // import Accordian from './Component/Accordian/Accordian';
 // import RandomColor from './Component/ColorChanger/ColorChanger';
-import ImageSlider from './Component/imageSlider/ImageSlider';
+// import ImageSlider from './Component/imageSlider/ImageSlider';
+import LodeMore from './Component/Loadmoredata/LodeMore';
 
 function App() {
   return (
     <div className="App">
       {/* <Accordian/>
 <RandomColor/>
-<StarRatting/> */}
-<ImageSlider url={`https://picsum.photos/v2/list`} limit={"10"}/>
+<StarRatting/>
+<ImageSlider url={`https://picsum.photos/v2/list`} limit={"10"}/> */}
+<LodeMore/>
     </div>
   );
 }

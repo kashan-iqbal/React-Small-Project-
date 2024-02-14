@@ -1,10 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
+import ThemeChanger from './Component/LightDark/ThemeChanger';
+// import QrCode from './Component/Qrcode/QrCode';
+// import MainTree from './Component/TreeView/MainTree';
 // import StarRatting from './Component/Ratting/StarRatting';
 // import Accordian from './Component/Accordian/Accordian';
 // import RandomColor from './Component/ColorChanger/ColorChanger';
 // import ImageSlider from './Component/imageSlider/ImageSlider';
-import LodeMore from './Component/Loadmoredata/LodeMore';
+// import LodeMore from './Component/Loadmoredata/LodeMore';
 
 function App() {
   return (
@@ -13,7 +16,10 @@ function App() {
 <RandomColor/>
 <StarRatting/>
 <ImageSlider url={`https://picsum.photos/v2/list`} limit={"10"}/> */}
-<LodeMore/>
+{/* <LodeMore/> */}
+{/* <MainTree/> */}
+{/* <QrCode/> */}
+<ThemeChanger/>
     </div>
   );
 }

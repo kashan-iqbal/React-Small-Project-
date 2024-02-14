@@ -5,9 +5,9 @@ const LodeMore = () => {
   const [products, setPorducts] = useState([]);
   const [disable, setDisable] = useState(false);
   const [loadMore, setLoadMore] = useState(0);
-  const [productLength , setProductsLength] = useState("")
+  const [productLength, setProductsLength] = useState("");
 
-  let totalPordus
+  let totalPordus;
   const getPorducts = async () => {
     try {
       const responce = await fetch(
@@ -16,8 +16,8 @@ const LodeMore = () => {
         }`
       );
       const data = await responce.json();
-      const {total} = data
-      setProductsLength(total)
+      const { total } = data;
+      setProductsLength(total);
       if (data && data.products && data.products.length) {
         setPorducts(
           loadMore === 0 ? data.products : (prev) => [...prev, ...data.products]
@@ -37,7 +37,7 @@ const LodeMore = () => {
     if (products.length === productLength) setDisable(true);
   }, [products]);
 
-console.log(products.length);
+  console.log(products.length);
   return (
     <div className="load-more-container">
       <div className="product-container">
@@ -51,7 +51,9 @@ console.log(products.length);
       </div>
 
       <div className="button-container">
-        <button disabled={disable} onClick={() => setLoadMore(loadMore + 1)}>LodeMore</button>
+        <button disabled={disable} onClick={() => setLoadMore(loadMore + 1)}>
+          LodeMore
+        </button>
       </div>
     </div>
   );

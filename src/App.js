@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import './App.css';
+// import './App.css';
 import ThemeChanger from './Component/LightDark/ThemeChanger';
 // import QrCode from './Component/Qrcode/QrCode';
 // import MainTree from './Component/TreeView/MainTree';

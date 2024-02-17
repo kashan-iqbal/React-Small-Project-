@@ -1,0 +1,39 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+  --background: #ffffff;
+  --text-primary: #000;
+  --button-bg: #000;
+  --button-text: #ffffff;
+}
+
+.light-dark-mood{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+[data-theme="dark"] {
+  --background: #000;
+  --text-primary: #ffff;
+  --button-bg: #ffffff;
+  --button-text: #000000;
+}
+.light-dark-mood {
+  background-color: var(--background);
+  color: var(--text-primary);
+  height: 100vh;
+}
+.light-dark-mood button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 10px;
+  outline: none;
+  border-radius: 1rem;
+  border: none;
+  margin-left: 2rem;
+}

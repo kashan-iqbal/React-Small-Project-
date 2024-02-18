@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import ThemeChanger from './Component/LightDark/ThemeChanger';
 import ScrollPersentage from './Component/Scroll/ScrollPersentage';
 import Opp from './Opp/Opp';
+import { Index } from './Component/Tab/Index';
 // import QrCode from './Component/Qrcode/QrCode';
 // import MainTree from './Component/TreeView/MainTree';
 // import StarRatting from './Component/Ratting/StarRatting';
@@ -23,7 +24,8 @@ function App() {
 {/* <QrCode/> */}
 {/* <ThemeChanger/> */}
 {/* <ScrollPersentage/> */}
-<Opp/>
+{/* <Opp/> */}
+<Index/>
     </div>
   );
 }

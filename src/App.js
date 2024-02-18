@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 // import './App.css';
 import ThemeChanger from './Component/LightDark/ThemeChanger';
+import ScrollPersentage from './Component/Scroll/ScrollPersentage';
+import Opp from './Opp/Opp';
 // import QrCode from './Component/Qrcode/QrCode';
 // import MainTree from './Component/TreeView/MainTree';
 // import StarRatting from './Component/Ratting/StarRatting';
@@ -19,7 +21,9 @@ function App() {
 {/* <LodeMore/> */}
 {/* <MainTree/> */}
 {/* <QrCode/> */}
-<ThemeChanger/>
+{/* <ThemeChanger/> */}
+{/* <ScrollPersentage/> */}
+<Opp/>
     </div>
   );
 }

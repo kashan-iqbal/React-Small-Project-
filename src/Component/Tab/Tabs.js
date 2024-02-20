@@ -1,18 +1,26 @@
 import React, { useState } from "react";
+import "./Style.css";
 
-const Tabs = ({ tabs, onChange }) => {
+const Tabs = ({ tabs }) => {
   const [index, setIndex] = useState(0);
   const handleChange = (id) => {
     setIndex(id);
   };
   return (
+
     <>
       <div className="wapper">
-        <header>
+        <header className="heading">
           {tabs.map((item, idx) => (
-            <h1 key={idx} onClick={() => handleChange(idx)}>
-              {item.lable}
-            </h1>
+            <div
+              className={`tab-item ${
+                index === idx ? "active" : ""
+              }`}
+              key={idx}
+              onClick={() => handleChange(idx)}
+            >
+              <span className="label"> {item.lable} </span>
+            </div>
           ))}
         </header>
         <section className="content">

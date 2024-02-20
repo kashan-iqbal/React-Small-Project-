@@ -1,16 +1,8 @@
-import logo from './logo.svg';
 // import './App.css';
-import ThemeChanger from './Component/LightDark/ThemeChanger';
-import ScrollPersentage from './Component/Scroll/ScrollPersentage';
-import Opp from './Opp/Opp';
-import { Index } from './Component/Tab/Index';
-// import QrCode from './Component/Qrcode/QrCode';
-// import MainTree from './Component/TreeView/MainTree';
-// import StarRatting from './Component/Ratting/StarRatting';
-// import Accordian from './Component/Accordian/Accordian';
-// import RandomColor from './Component/ColorChanger/ColorChanger';
-// import ImageSlider from './Component/imageSlider/ImageSlider';
-// import LodeMore from './Component/Loadmoredata/LodeMore';
+import AutoCompleteApi from './Component/Search/AutoCompleteApi';
+import ProfileFinder from './Component/gitHubProfile/ProfileFinder';
+import TicTakTo from './Component/tic-tac-toe/TicTakTo';
+
 
 function App() {
   return (
@@ -25,7 +17,10 @@ function App() {
 {/* <ThemeChanger/> */}
 {/* <ScrollPersentage/> */}
 {/* <Opp/> */}
-<Index/>
+{/* <Index/> */}
+{/* <ProfileFinder/> */}
+{/* <AutoCompleteApi/> */}
+<TicTakTo/>
     </div>
   );
 }

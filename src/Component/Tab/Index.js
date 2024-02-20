@@ -16,8 +16,16 @@ export const Index = () => {
       content: "I am history page",
     },
     {
-      lable: "following",
-      content: "I am following page",
+      lable: "worindg",
+      content: "I am working page",
+    },
+    {
+      lable: "About Us",
+      content: "I am About US page",
+    },
+    {
+      lable: "desiging",
+      content: "I am desiging page",
     },
   ];
 

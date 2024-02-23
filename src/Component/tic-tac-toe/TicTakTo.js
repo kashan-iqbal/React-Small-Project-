@@ -55,7 +55,7 @@ const TicTakTo = () => {
   return (
     <div className="tic-tac-toe-container">
       {status}
-      <p>{isXturn ? "x" : "0"}  player Turn</p>
+      <p>Now {isXturn ? "x" : "0"}  player Turn</p>
       <div className="row">
         <Square value={square[0]} onclick={() => handleChange(0)} />
         <Square value={square[1]} onclick={() => handleChange(1)} />

@@ -20,11 +20,18 @@ const AccordianRepeat = () => {
 
   const color = enableMultiSlection ? "red" : "";
 console.log(multiple)
+
+const handleMultipleTime = () =>{
+  setEnableMultipleSlection( !enableMultiSlection)
+  setMultiple([])
+}
+
+
   return (
     <div>
       <button
         style={{ backgroundColor: color }}
-        onClick={() => setEnableMultipleSlection( !enableMultiSlection)}
+        onClick={ handleMultipleTime}
       >
         EnableMultiSlection
       </button>

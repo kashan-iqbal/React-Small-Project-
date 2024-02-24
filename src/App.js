@@ -1,11 +1,6 @@
 // import './App.css';
-import AutoCompleteApi from "./Component/Search/AutoCompleteApi";
-import ProfileFinder from "./Component/gitHubProfile/ProfileFinder";
-import TicTakTo from "./Component/tic-tac-toe/TicTakTo";
-import FetchCustomhook from "./Component/useFetch/FetchCustomhook";
-import LearnReact from "./LearningReact/LearnReact";
-import Accordian from './Component/Accordian/Accordian';
-import AccordianRepeat from "./repeat/AccordianRepeat";
+
+import MenuList from "./repeat/Tree view/MenuList";
 
 function App() {
   return (
@@ -26,8 +21,11 @@ function App() {
       {/* <TicTakTo/> */}
       {/* <FetchCustomhook /> */}
       {/* <LearnReact/> */}
-
-      <AccordianRepeat/>
+{/*  Reatpent project */}
+      {/* <AccordianRepeat/> */}
+      {/* <Ratting/> */}
+      {/* <ImageSliderReapeat/> */}
+<MenuList/>
     </div>
   );
 }

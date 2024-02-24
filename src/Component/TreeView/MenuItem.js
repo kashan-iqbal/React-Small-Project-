@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MenuList from "./MenuList";
-import {FaMinus, FaPlus} from 'react-icons/fa'
+import { FaMinus, FaPlus } from "react-icons/fa";
 import "./Style.css";
 
 const MenuItem = ({ m }) => {
@@ -12,7 +12,11 @@ const MenuItem = ({ m }) => {
         <p>{m.label}</p>
         {m.children && m.children.length ? (
           <span onClick={() => setOpen((prev) => !prev)}>
-            {open ?  <FaMinus color="#fff" size={25} />: <FaPlus color="#fff" size={25}/>}
+            {open ? (
+              <FaMinus color="#fff" size={25} />
+            ) : (
+              <FaPlus color="#fff" size={25} />
+            )}
           </span>
         ) : null}
         {m && m.children && m.children.length > 0 ? (

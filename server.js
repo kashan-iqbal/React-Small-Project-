@@ -2,7 +2,6 @@
 // const { Server } = require("socket.io");
 // const { createServer } = require("http");
 // const cors = require("cors");
-// const { log } = require("console");
 
 // const app = express();
 
@@ -60,17 +59,24 @@ app.get("/", (req, res) => {
   res.send("<h1> I am socket.io</h1>");
 });
 
-
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:5173',
-    methods: ['GET', 'POST'],
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
   },
 });
 
-io.on("connection", (socket) => {
-  socket.emit("join", "your are connected with this id ", socket.id);
-  console.log(`user is connected ${socket.id}`)
+io.on("connect", (socket) => {
+  console.log(`User connected: ${socket.id}`);
+
+  socket.broadcast.emit("welcome", `welcome with this ${socket.id}`);
+  socket.on("message", (msg) => {
+    socket.broadcast.emit("rec-msg", msg);
+  });
+
+  socket.on("disconnect", () => {
+    console.log(`User disconnected: ${socket.id}`);
+  });
 });
 
 server.listen(4000, () => console.log(`server is runnig on port ${4000}`));

@@ -72,54 +72,48 @@
 
 // export default App;
 
-// import React, { useEffect } from "react";
-// import { io } from "socket.io-client";
-
-// const App = () => {
-//   const Socket = io(`http://localhost:4000`);
-
-//   // useEffect(() => {
-//   //   Socket.on("connect", () => {
-//   //     console.log(`your are connected to the chat app`);
-//   //   });
-//   //   console.log(`i am use `);
-//   // }, []);
-
-//   useEffect(() => {
-//     console.log(`first`);
-//   }, []);
-
-//   return (
-//     <div>
-//       <select onChange={(e) => console.log(e.target.value)}>
-//         <option>admin</option>
-//         <option>Route</option>
-//         <option>user</option>
-//       </select>
-//       App
-//     </div>
-//   );
-// };
-
-// export default App;
-
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 
 const App = () => {
-  const Socket = io(`http://localhost:4000`);
-console.log(Socket);
+  const [msg, setMsg] = useState("");
+  const [message,setMessage] = useState('')
+  const Socket = useMemo(() => io(`http://localhost:4000`), []);
+
   useEffect(() => {
-    console.log("first");
+    Socket.on("connect", () => {
+      console.log(`connected with ${Socket.id}`);
+    });
+
+    Socket.on("welcome", (d) => {
+      console.log(d);
+    });
+
+    Socket.on("rec-msg", (d) => {
+      console.log(d);
+      setMessage((prev)=> [...prev,d])
+    });
+
+
   }, []);
+
+  const handleSumbmit = (e) => {
+    e.preventDefault()
+    Socket.emit("message", msg);
+    setMsg("");
+  };
 
   return (
     <div>
-      <select onChange={(e) => console.log(e.target.value)}>
-        <option>admin</option>
-        <option>Route</option>
-        <option>user</option>
-      </select>
+      <form onSubmit={handleSumbmit}>
+        <input type="text" onChange={(e) => setMsg(e.target.value)} value={msg} />
+        <button type="submit">sub</button>
+      </form>
+<div>
+  {
+     message && message.length? message.map((m,idx)=> <p key={idx}>{m}</p>):null
+  }
+</div>
       App
     </div>
   );

@@ -1,6 +1,7 @@
 // import './App.css';
 
-import MenuList from "./repeat/Tree view/MenuList";
+import CallApi from "./LearningReact/CallApi";
+import Interview from "./interview/Interview";
 
 function App() {
   return (
@@ -25,7 +26,9 @@ function App() {
       {/* <AccordianRepeat/> */}
       {/* <Ratting/> */}
       {/* <ImageSliderReapeat/> */}
-<MenuList/>
+{/* <MenuList/> */}
+{/* <CallApi/> */}
+<Interview/>
     </div>
   );
 }

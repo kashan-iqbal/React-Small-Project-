@@ -1,12 +1,12 @@
 import Jwt from "jsonwebtoken";
 import env from "dotenv";
 import { User } from "../models/user.modal.js";
+import { ApiError } from "../utils/ApiError.js";
 
 env.config();
 
 const jwtVerify = async (req, res, next) => {
   const token = req.cookies?.accessToken;
-
   try {
     if (!token) {
       return res.send({ message: "not token" });
@@ -16,15 +16,11 @@ const jwtVerify = async (req, res, next) => {
     const user = await User.findById(decodedToken._id).select(
       "-password -reFreshToken"
     );
-
     req.user = user;
+    next();
   } catch (error) {
-    if (error) {
-      console.log(`error in auth middleware`, error);
-    }
+    res.send(error.message)
   }
-
-  next();
 };
 
 export default jwtVerify;

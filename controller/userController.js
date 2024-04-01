@@ -2,6 +2,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.modal.js";
 import { upLoadOnCloudnairy } from "../utils/cloudnairy.js";
 import { ApiResponce } from "../utils/Apiresponce.js";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
 const generateAccessTokenAndRefreshToken = async (userId) => {
@@ -109,9 +110,8 @@ const LoginUser = async (req, res) => {
     }
 
     const checkPassword = await user.isPasswordCorrect(password);
-
     if (!checkPassword) {
-      throw new ApiError(400, "Invalid credential");
+      return res.send({ message: "password is not correct" });
     }
     const { accessToken, reFreshToken } =
       await generateAccessTokenAndRefreshToken(user._id);
@@ -152,16 +152,208 @@ const logout = async (req, res) => {
       new: true,
     }
   );
- const option ={
-  httpOnly:true,
-   secure:true
- }
- return res
- .status(200)
- .clearCookie("accessToken",option)
- .clearCookie("reFreshToken",option)
-.send({message:"logut successful"})
- 
-
+  const option = {
+    httpOnly: true,
+    secure: true,
+  };
+  return res
+    .status(200)
+    .clearCookie("accessToken", option)
+    .clearCookie("reFreshToken", option)
+    .send({ message: "logut successful" });
 };
-export { registerUser, LoginUser, logout };
+
+const renewAccessToken = async (req, res) => {
+  try {
+    const tokenRefresh = req.cookies.reFreshToken;
+
+    const id = await jwt.decode(tokenRefresh, process.env.REFRESH_TOKEN_SECRET);
+
+    const currentUser = await User.findById(id);
+    if (!(tokenRefresh === currentUser.reFreshToken)) {
+      throw new ApiError(400, `you need to logn again`);
+    }
+    const { accessToken, reFreshToken } =
+      await generateAccessTokenAndRefreshToken(id);
+    const option = {
+      httpOnly: true,
+      secure: true,
+    };
+    return res
+      .status(200)
+      .cookie("accessToken", accessToken, option)
+      .cookie("reFreshToken", reFreshToken, option)
+      .send({ message: "update successfully" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const changePassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    if (!oldPassword || !newPassword) {
+      return res.send({ message: "all fieds are requird" });
+    }
+
+    const user = await User.findById(req.user._id);
+
+    const checkingPassword = await user.isPasswordCorrect(oldPassword);
+    if (!checkingPassword) {
+      return res.send({ message: "old password is not same" });
+    }
+    user.password = newPassword;
+    await user.save({ validateBeforSave: true });
+
+    return res.send({ message: "Password update successFully" });
+  } catch (error) {
+    if (error) {
+      console.log(error);
+      return res.send({ message: "error in change pass" });
+    }
+  }
+};
+
+const getCurrentUser = async (req, res) => {
+  try {
+    if (req.user) {
+      return res.send({ message: "user information", user: req.user });
+    }
+  } catch (error) {
+    return res.send({ message: "error while getting user information" });
+  }
+};
+
+const updateInfo = async (req, res) => {
+  try {
+    const { fullName, email } = req.body;
+    if (!(fullName || email)) {
+      return res.send({
+        message: "fields are require to  update user Profile",
+      });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.user?._id,
+      {
+        $set: {
+          email,
+          fullName,
+        },
+      },
+      { new: true }
+    ).select("-password");
+    return res.send({
+      message: "user update successfully",
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.send({
+      message: "error while update user",
+    });
+  }
+};
+
+const updateAvatar = async (req, res) => {
+  try {
+    const avatar = req.file;
+    console.log(req.file);
+    if (!avatar) {
+      return res.send({
+        message: "image is require",
+      });
+    }
+
+    const filePath = avatar.path;
+
+    const result = await upLoadOnCloudnairy(filePath);
+
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $set: {
+          avatar: result.url,
+        },
+      },
+      { new: true }
+    ).select("-password");
+    return res.send({
+      message: "Avatar image successfully",
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.send({
+      message: "error while update avatar image",
+    });
+  }
+};
+
+const updateCoverImage = async (req, res) => {
+  try {
+    const coverImage = req.file;
+    console.log(coverImage)
+    if (!coverImage) {
+      return res.send({
+        message: "coverImage is require",
+      });
+    }
+
+    const filePath = coverImage.path;
+
+    const result = await upLoadOnCloudnairy(filePath);
+
+    const user = await User.findByIdAndUpdate(
+      req.user,
+      {
+        $set: {
+          coverImage: result.url,
+        },
+      },
+      { new: true }
+    ).select("-password");
+    return res.send({
+      message: "coverimage successfully",
+      user,
+    });
+  } catch (error) {
+    return res.send({
+      message: "error while update  coverImage",
+    });
+  }
+};
+
+
+const subcribeChannel = async(req,res)=>{
+  try {
+    
+    
+  } catch (error) {
+    
+  }
+}
+
+
+const working = async (req, res) => {
+  try {
+    res.send({ message: "i am working" });
+    console.log(req.user);
+  } catch (error) {
+    if (error) {
+      console.log(error, `iam`);
+    }
+  }
+};
+export {
+  registerUser,
+  LoginUser,
+  logout,
+  renewAccessToken,
+  working,
+  changePassword,
+  getCurrentUser,
+  updateInfo,
+  updateAvatar,
+  updateCoverImage,
+};

@@ -1,9 +1,11 @@
 import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.modal.js";
-import { upLoadOnCloudnairy } from "../utils/cloudnairy.js";
+import { deleteOldResource, upLoadOnCloudnairy } from "../utils/cloudnairy.js";
 import { ApiResponce } from "../utils/Apiresponce.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import { Subcription } from "../models/subcription.model.js";
+import { mongoose } from "mongoose";
 
 const generateAccessTokenAndRefreshToken = async (userId) => {
   try {
@@ -258,7 +260,6 @@ const updateInfo = async (req, res) => {
 const updateAvatar = async (req, res) => {
   try {
     const avatar = req.file;
-    console.log(req.file);
     if (!avatar) {
       return res.send({
         message: "image is require",
@@ -266,6 +267,10 @@ const updateAvatar = async (req, res) => {
     }
 
     const filePath = avatar.path;
+    const deleteOld = await User.findById(req.user._id);
+    if (deleteOld) {
+      deleteOldResource(deleteOld?.avatar);
+    }
 
     const result = await upLoadOnCloudnairy(filePath);
 
@@ -293,7 +298,7 @@ const updateAvatar = async (req, res) => {
 const updateCoverImage = async (req, res) => {
   try {
     const coverImage = req.file;
-    console.log(coverImage)
+    console.log(coverImage);
     if (!coverImage) {
       return res.send({
         message: "coverImage is require",
@@ -324,16 +329,118 @@ const updateCoverImage = async (req, res) => {
   }
 };
 
-
-const subcribeChannel = async(req,res)=>{
+const subcribeChannel = async (req, res) => {
   try {
-    
-    
-  } catch (error) {
-    
-  }
-}
+    const { userName } = req.params;
 
+    const channel = await User.aggregate([
+      {
+        $match: { userName: userName?.toLowerCase() },
+      },
+      {
+        $lookup: {
+          from: "subcribtion",
+          foreignField: "_id",
+          localField: "subcriber",
+          as: "iSubcribe",
+        },
+      },
+      {
+        $lookup: {
+          from: "subcribtion",
+          foreignField: "_id",
+          localField: "channel",
+          as: "mySubcribe",
+        },
+      },
+      {
+        $addFields: {
+          mySubcriber: {
+            $size: "$mySubcribe",
+          },
+          Isubcribe: {
+            $size: "$iSubcribe",
+          },
+          isSubcribe: {
+            $cond: {
+              if: { $in: [req.user?._id, "$mySubcribe.subcriber"] },
+              then: true,
+              else: false,
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          userName: 1,
+          userName: 1,
+          mySubcriber: 1,
+          Isubcribe: 1,
+          isSubcribe: 1,
+          coverImage: 1,
+          avatar: 1,
+          email: 1,
+        },
+      },
+    ]);
+    console.log(channel);
+    res.send({ channel });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getWatchHistory = async (req, res) => {
+  try {
+    const user = await User.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(req.user._id),
+        },
+      },
+      {
+        $lookup: {
+          from: "Video",
+          foreignField: "watchHistory",
+          localField: "_id",
+          as: "watchHistory",
+          pipeline: [
+            {
+              $lookup: {
+                from: "user",
+                localField: "owner",
+                foreignField: "_id",
+                as: "owner",
+                pipeline: [
+                  {
+                    $project: {
+                      fullName: 1,
+                      userName: 1,
+                      avatar: 1,
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        $addFields: {
+          owner: {
+            $first: "$owner",
+          },
+        },
+      },
+    ]);
+
+    res.send({message:user[0]})
+
+
+  } catch (error) {
+    console.log(error)
+  }
+};
 
 const working = async (req, res) => {
   try {

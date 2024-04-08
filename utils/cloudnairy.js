@@ -16,10 +16,31 @@ const upLoadOnCloudnairy = async (uploadFilePath) => {
       return responce;
     }
   } catch (error) {
-    console.log(error)
     fs.unlinkSync(uploadFilePath);
     return null;
   }
 };
+const deleteOldResource = async (url) => {
+  try {
+    console.log(url);
+    cloudinary.api.resource(url, function (error, result) {
+      if (error) {
+        console.log(error, `iam error`);
+      } else {
+        console.log(result)
+          cloudinary.uploader.destroy(result?.public_id, function (error, result) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(result, ` iam delete succes fully`);
+            }
+          });
+        
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-export { upLoadOnCloudnairy };
+export { upLoadOnCloudnairy, deleteOldResource };

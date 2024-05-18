@@ -1,0 +1,29 @@
+.tic-tac-contianer {
+  height: 600px;
+  width: 600px;
+  background-color: green;
+}
+
+.tic-tac-contianer button {
+  height: 200px;
+  width: 200px;
+  border: none;
+}
+
+button:nth-child(1),
+button:nth-child(2),
+button:nth-child(3),
+button:nth-child(4),
+button:nth-child(5),
+button:nth-child(6) {
+  border-bottom: 4px solid black;
+}
+
+button:nth-child(1),
+button:nth-child(2),
+button:nth-child(4),
+button:nth-child(5),
+button:nth-child(7),
+button:nth-child(8) {
+  border-right: 4px solid black;
+}

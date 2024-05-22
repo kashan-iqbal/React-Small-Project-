@@ -1,5 +1,6 @@
 body{
-  height: 100vh !important;
+  height: 200vh !important;
+  background: rgb(206, 155, 155);
   width: 100vw !important ;
   display: flex;
   justify-content: center;

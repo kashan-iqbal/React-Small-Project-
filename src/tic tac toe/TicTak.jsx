@@ -67,6 +67,8 @@ const TicTak = () => {
     setActivePlayer(player.A);
   };
 
+const icon = playerIcon[activePlayer]
+console.log(playerTurn)
   return (
     <div className="tic-tac-contianer">
       {btn.map((b, i) => {
@@ -80,6 +82,7 @@ const TicTak = () => {
           icon = playerIcon[otherPlayer];
         }
 
+      
         return (
           <button onClick={handleturn(i)} key={i}>
             {icon}

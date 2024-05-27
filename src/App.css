@@ -1,3 +1,4 @@
+
 body{
   height: 200vh !important;
   background: rgb(206, 155, 155);
@@ -5,4 +6,8 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 2rem;
+}
+input{
+    height: 2rem;
 }

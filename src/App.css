@@ -1,7 +1,12 @@
+
 body{
   height: 100vh !important;
   width: 100vw !important ;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 2rem;
+}
+input{
+    height: 2rem;
 }

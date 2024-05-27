@@ -29,21 +29,12 @@ const TicTak = () => {
       setActivePlayer(newPlayer);
     };
   };
-
-  console.log(activePlayer);
+const icon = playerIcon[activePlayer]
+console.log(playerTurn)
   return (
     <div className="tic-tac-contianer">
       {btn.map((b, i) => {
-        const otherPlayer = activePlayer === player.A ? player.B : player.A;
-
-        const currentPlayerTurn = playerTurn[activePlayer];
-        const otherPlayerTurn = playerTurn[activePlayer];
-        let icon = "";
-        if (currentPlayerTurn.join("").includes(String(i))) {
-          icon = playerIcon[activePlayer];
-        } else if (otherPlayerTurn.join("").includes(String(i))) {
-          icon = playerIcon[otherPlayer];
-        }
+      
         return (
           <button onClick={handleturn(i)} key={i}>
             {icon}

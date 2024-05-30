@@ -1,32 +1,32 @@
 import { useState } from "react";
 
 function Statemangement() {
-  const [data, setData] = useState({
-    discount: 1,
+  const [validate, setValidate] = useState(true);
+  const [input, setInput] = useState("");
 
-    item: [
-      {
-        id: 1,
-        tittel: "products",
-        quantity: 1,
-      },
-      {
-        id: 3,
-        tittel: "products",
-        quantity: 2,
-      },
-    ],
-  });
-  const handleUpdate = () => {
-    setData({...data,item: data.item.map((d)=> d.id === 1? {...d,quantity:5}:d)});
+  const handleChange = (e) => {
+    const { value } = e.target;
+    let amt = 100;
+    if ( value.length <= 2) {
+      setInput(value);
+    }
+    if (amt === parseInt(value)) {
+      console.log(`first`)
+      if (amt.length === parseInt(value).length) {
+        setInput(value);
+        setValidate(false);
+      }
+    } else {
+      setValidate(true);
+    }
+    console.log(value);
   };
 
   return (
     <div>
-      {data.item.map((d, idx) => (
-        <div key={idx}>{d.tittel} {d.quantity}</div>
-      ))}
-      <button onClick={handleUpdate}>update</button>
+      <input value={input} type="number" onChange={handleChange} />
+
+      <button disabled={validate}>update</button>
     </div>
   );
 }

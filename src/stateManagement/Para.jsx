@@ -16,4 +16,6 @@ const Para = ({ children, maxChar }) => {
   );
 };
 
+
+
 export default Para;

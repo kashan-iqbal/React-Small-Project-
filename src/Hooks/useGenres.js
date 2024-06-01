@@ -2,17 +2,16 @@ import { useEffect, useState } from "react";
 import axiox from "../api-client/ApiClient";
 import { CanceledError } from "axios";
 
-const useGame = (endPoint, params = {}, dep = []) => {
+const useGenres = () => {
   const [game, setGames] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
     const controller = new AbortController();
-    // https://api.rawg.io/api/genres/{id}
     const getGames = async () => {
       try {
-        const { data } = await axiox.get(endPoint, params, {
+        const { data } = await axiox.get("/genres", {
           signal: controller.signal,
         });
         setGames(data.results);
@@ -26,9 +25,9 @@ const useGame = (endPoint, params = {}, dep = []) => {
     };
     getGames();
     return () => controller.abort();
-  }, [...dep]);
-  console.log(game,`i am kuse`);
+  }, []);
+
   return { error, game, loading };
 };
 
-export default useGame;
+export default useGenres;

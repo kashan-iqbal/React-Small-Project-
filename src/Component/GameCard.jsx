@@ -1,12 +1,12 @@
 import { Card, CardBody, HStack, Heading, Image } from "@chakra-ui/react";
-import React from "react";
 import CardIcon from "./CardIcon";
 import CardScore from "./CardScore";
+import { optimizedIimage } from "../utils/OptimizedImage";
 
 const GameCard = ({ game }) => {
   return (
-    <Card borderRadius={10} overflow={"hidden"}>
-      <Image src={game.background_image} />
+    <Card >
+      <Image maxHeight="200px" src={game.background_image} />
       <CardBody>
         <Heading fontSize="2xl">{game.name}</Heading>
         <HStack>

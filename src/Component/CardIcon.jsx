@@ -6,7 +6,6 @@ import { RiAppleLine } from "react-icons/ri";
 import { FaLinux } from "react-icons/fa";
 import { BsNintendoSwitch } from "react-icons/bs";
 const CardIcon = ({ data }) => {
-  console.log(data);
   const item = {
     PC: HiDesktopComputer,
     PlayStation: TbPlaystationSquare,
@@ -25,12 +24,12 @@ const CardIcon = ({ data }) => {
   return (
     <>
       {data.length > 0 &&
-        data.map((d) => {
+        data.map((d,i) => {
           if (!d) {
             d = item.Apple_Macintos;
           }
 
-          return <Icon as={item[d]} />;
+          return <Icon key={i}  as={item[d]} />;
         })}
     </>
   );

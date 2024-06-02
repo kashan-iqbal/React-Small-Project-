@@ -1,12 +1,15 @@
-import { Grid, GridItem, Show } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Show } from "@chakra-ui/react";
 import Navbar from "./Component/Navbar";
 import GameGrid from "./Component/GameGrid";
 import Genres from "./Component/Genres";
 import { useState } from "react";
+import PlatForm from "./Component/PlatForm";
+import SortSlector from "./Component/SortSlector";
 
 const App = () => {
-  const [slected, setSlected] = useState("");
-  
+  const [gameQuerry, setGameQuerry] = useState({ slected: "", platform: "",sort:"",search:"" });
+
+
   return (
     <>
       <Grid
@@ -20,15 +23,27 @@ const App = () => {
         }}
       >
         <GridItem area={`nav`}>
-          <Navbar />
+          <Navbar setGameQuerry={setGameQuerry}  />
         </GridItem>
         <Show above="lg">
           <GridItem paddingX={7} area={`sect`}>
-            <Genres slected={slected}  setSlected={(val) => setSlected(val)} />
+            <Genres
+              slected={gameQuerry.slected}
+              setSlected={setGameQuerry}
+            />
           </GridItem>
         </Show>
         <GridItem area={`main`}>
-          <GameGrid slected={slected} />
+          <Flex justifyContent="space-around">
+          <PlatForm platform={gameQuerry.platform} setGameQuerry={setGameQuerry} />
+          <SortSlector  gameQuerry={gameQuerry.sort} setSort={setGameQuerry} />
+          </Flex>
+          <GameGrid
+            slected={gameQuerry.slected}
+            platform={gameQuerry.platform}
+            sort={gameQuerry.sort}
+            search={gameQuerry.search}
+          />
         </GridItem>
       </Grid>
     </>

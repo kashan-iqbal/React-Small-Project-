@@ -10,7 +10,7 @@ import {
 import useGame from "../Hooks/useGame";
 
 const Genres = ({ setSlected, slected }) => {
-  const { game, loading, error } = useGame("/genres");
+  const { game, loading, error } = useGame(`/genres`);
   if (loading) {
     return (
       <Box
@@ -32,8 +32,8 @@ const Genres = ({ setSlected, slected }) => {
               {" "}
               <Img boxSize="62px" src={g.image_background} />{" "}
               <Button
-                color={slected === g.id ? "red" : null}
-                onClick={() => setSlected(g.id)}
+                color={slected.id === g.id ? "red" : null}
+                onClick={() => setSlected((prev)=>({...prev,slected:g}))}
                 variant="link"
                 fontSize="x-large"
               >

@@ -1,8 +1,8 @@
-import { HStack, Switch, useColorMode } from "@chakra-ui/react";
+import { HStack, Switch, Text, useColorMode } from "@chakra-ui/react";
 
 const ThemeButton = () => {
   const { toggleColorMode, colorMode } = useColorMode();
-
+  console.log(colorMode);
   return (
     <HStack>
       <Switch
@@ -10,6 +10,7 @@ const ThemeButton = () => {
         isChecked={colorMode === "dark"}
         onChange={toggleColorMode}
       />
+      <Text whiteSpace="nowrap">Theme {colorMode}</Text>
     </HStack>
   );
 };

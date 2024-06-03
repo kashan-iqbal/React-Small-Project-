@@ -5,10 +5,15 @@ import Genres from "./Component/Genres";
 import { useState } from "react";
 import PlatForm from "./Component/PlatForm";
 import SortSlector from "./Component/SortSlector";
+import HeadingComp from "./Component/Heading";
 
 const App = () => {
-  const [gameQuerry, setGameQuerry] = useState({ slected: "", platform: "",sort:"",search:"" });
-
+  const [gameQuerry, setGameQuerry] = useState({
+    slected: "",
+    platform: "",
+    sort: "",
+    search: "",
+  });
 
   return (
     <>
@@ -23,20 +28,24 @@ const App = () => {
         }}
       >
         <GridItem area={`nav`}>
-          <Navbar setGameQuerry={setGameQuerry}  />
+          <Navbar
+            slected={gameQuerry.slected}
+            setGameQuerry={setGameQuerry}
+          />
         </GridItem>
         <Show above="lg">
           <GridItem paddingX={7} area={`sect`}>
-            <Genres
-              slected={gameQuerry.slected}
-              setSlected={setGameQuerry}
-            />
+            <Genres slected={gameQuerry.slected} setSlected={setGameQuerry} />
           </GridItem>
         </Show>
         <GridItem area={`main`}>
+          <HeadingComp name={gameQuerry} />
           <Flex justifyContent="space-around">
-          <PlatForm platform={gameQuerry.platform} setGameQuerry={setGameQuerry} />
-          <SortSlector  gameQuerry={gameQuerry.sort} setSort={setGameQuerry} />
+            <PlatForm
+              platform={gameQuerry.platform}
+              setGameQuerry={setGameQuerry}
+            />
+            <SortSlector gameQuerry={gameQuerry.sort} setSort={setGameQuerry} />
           </Flex>
           <GameGrid
             slected={gameQuerry.slected}

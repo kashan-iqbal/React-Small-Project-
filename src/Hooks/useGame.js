@@ -3,7 +3,6 @@ import axiox from "../api-client/ApiClient";
 import { CanceledError } from "axios";
 
 const useData = (endPoint, params = {}, dep = []) => {
-  console.log(endPoint,params,dep)
   const [game, setGames] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -30,7 +29,6 @@ const useData = (endPoint, params = {}, dep = []) => {
     },
     dep ? [...dep] : []
   );
-  console.log(game, `i am kuse`);
   return { error, game, loading };
 };
 

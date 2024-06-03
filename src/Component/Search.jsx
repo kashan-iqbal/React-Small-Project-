@@ -1,7 +1,6 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { BsSearch } from "react-icons/bs";
-import "../App.css";
 
 const Search = ({ setSearch }) => {
   const search = useRef(null);
@@ -13,7 +12,7 @@ const Search = ({ setSearch }) => {
   };
 
   return (
-    <form onSubmit={handleSearch}>
+    <form style={{width:"100%" }} onSubmit={handleSearch}>
       <InputGroup>
         <InputLeftElement children={<BsSearch />} />
         <Input

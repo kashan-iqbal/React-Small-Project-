@@ -1,10 +1,17 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .tic-tac-contianer {
-  height: fit-content;
+  height: 600px;
   width: 600px;
-  background-color: green;
+  background-color: rgb(150, 150, 150);
 }
 
 .tic-tac-contianer button {
+  overflow: hidden;
   height: 200px;
   width: 200px;
   border: none;

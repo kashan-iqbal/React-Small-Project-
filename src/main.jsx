@@ -7,6 +7,7 @@ import FormComponent from "./form/Form.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     {/* <App /> */}
-    <FormComponent />
+    {/* <FormComponent /> */}
+    <TicTak/>
   </React.StrictMode>
 );

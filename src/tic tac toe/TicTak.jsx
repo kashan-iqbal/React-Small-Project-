@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./style.css";
+import React, { act, useState } from "react";
+import "./Tac.css";
 
 const player = {
   A: 0,
@@ -10,89 +10,83 @@ const playerIcon = {
   [player.B]: "O",
 };
 
-const defaultTurn = {
+const playerTurn = {
   [player.A]: [],
   [player.B]: [],
 };
-
-const winingPattern = ["012", "345", "678", "036", "147", "258", "048", "246"];
+const winPattern = ["012", "345", "678", "036", "147", "258", "048", "246"];
 
 const TicTak = () => {
   const [activePlayer, setActivePlayer] = useState(player.A);
-  const [playerTurn, setPlayerTurn] = useState(structuredClone(defaultTurn));
-  const [msg, setMsg] = useState("");
+  const [turn, setTurn] = useState(structuredClone(playerTurn));
+  const [disable, setDisable] = useState(false);
+  const [win, setwin] = useState("");
   const btn = Array.from(new Array(9));
 
-  const handleturn = (i) => {
+  const handleTurn = (i) => {
     return () => {
-      const newPlayer = activePlayer === player.A ? player.B : player.A;
-      const oldPlayer = structuredClone(playerTurn);
+      const newTurn = activePlayer === player.A ? player.B : player.A;
+      const oldPlayer = structuredClone(turn);
+      if (turn[activePlayer].join("").includes(String(i))) {
+        return;
+      }
+      if (turn[newTurn].join("").includes(String(i))) {
+        return;
+      }
 
-      if (playerTurn[player.A].join("").includes(String(i))) {
-        return;
-      }
-      if (playerTurn[player.B].join("").includes(String(i))) {
-        return;
-      }
       oldPlayer[activePlayer].push(String(i));
-      setPlayerTurn(oldPlayer);
-
-      const res = checkWinner(winingPattern, oldPlayer[activePlayer]);
+      setTurn(oldPlayer);
+      const res = checkingWinningPatern(winPattern, oldPlayer[activePlayer]);
       if (res) {
-        setMsg(`winner pLayer is${res}`);
-        return;
+        setwin(res);
+        setDisable(true);
+        return
       }
-
-      setActivePlayer(newPlayer);
+      setActivePlayer(newTurn);
     };
   };
 
-  function checkWinner(winingPattern, arr) {
+  const checkingWinningPatern = (pattren, arr) => {
     const finalArr = arr.sort().join("");
-
-    const res = winingPattern.some((t) => strickChecking(t, finalArr));
-    if (res) {
-      return playerIcon[activePlayer];
+    for (let i = 0; i < pattren.length; i++) {
+      const element = pattren[i];
+      console.log(element, finalArr);
+      if (element === finalArr) {
+        return playerIcon[activePlayer];
+      }
     }
-    console.log(res);
-  }
-
-  function strickChecking(t, finalArr) {
-    return t.split("").every((p) => finalArr.includes(p));
-  }
-
-  const handleReset = () => {
-    setMsg("");
-    setPlayerTurn(defaultTurn);
-    setActivePlayer(player.A);
   };
 
-  const icon = playerIcon[activePlayer];
-  console.log(playerTurn);
+  const handleRest=()=>{
+    setDisable(false)
+    setTurn(playerTurn)
+    setActivePlayer(player.A)
+    setwin("")
+  }
+
+  console.log(win);
   return (
     <div className="tic-tac-contianer">
       {btn.map((b, i) => {
-        let otherPlayer = activePlayer === player.A ? player.B : player.A;
-        const currentPlayerTurns = playerTurn[activePlayer];
-        const previousPlayer = playerTurn[otherPlayer];
-        let icon = "";
-        if (currentPlayerTurns.join("").includes(String(i))) {
+        const otherPlayer = activePlayer === player.A ? player.B : player.A;
+        let icon;
+        const active = turn[activePlayer];
+        const other = turn[otherPlayer];
+
+        if (active.join("").includes(String(i))) {
           icon = playerIcon[activePlayer];
-        } else if (previousPlayer.join("").includes(String(i))) {
+        } else if (other.join("").includes(String(i))) {
           icon = playerIcon[otherPlayer];
         }
 
         return (
-          <button onClick={handleturn(i)} key={i}>
+          <button disabled={disable} onClick={handleTurn(i)} key={i}>
             {icon}
           </button>
         );
       })}
-      {msg && (
-        <>
-          <p>{msg} </p> <button onClick={handleReset}>restart Game</button>
-        </>
-      )}
+      {win && <p>{win} Is The Winner</p>}
+      {win && <button onClick={handleRest} >restart Game</button>}
     </div>
   );
 };

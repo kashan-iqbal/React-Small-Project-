@@ -1,5 +1,5 @@
 import { Button, Checkbox, colors, TextField } from "@mui/material";
-import { Formik, useFormik, Field , Form ,ErrorMessage } from "formik";
+import { Formik, useFormik, Field, Form, ErrorMessage } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
 import Error from "./Error";
@@ -59,16 +59,17 @@ const FormComponent = () => {
     onSubmit: (val) => console.log(val),
   });
 
-const syl={
-   color: "red", fontSize: "12px" 
-}
+  const syl = {
+    color: "red",
+    fontSize: "12px",
+  };
 
   return (
     <div className="cont">
-      <form onReset={formik.handleReset} onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
         <div>
           <label htmlFor="">name</label>
-
+          <Field type="text" name="name"/>
           <input
             type="text"
             placeholder="Enter Your Name"
@@ -77,10 +78,9 @@ const syl={
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {/* {formik.touched.name && formik.errors.name && (
+          {formik.touched.name && formik.errors.name && (
             <Error error={formik.errors.name} />
-          )} */}
-          <ErrorMessage name="name" component="div" className={syl} />
+          )}
         </div>
         <div>
           <label htmlFor="">Email</label>

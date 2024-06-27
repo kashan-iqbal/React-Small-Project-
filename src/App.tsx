@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Inputfiled from "./component/Inputfiled";
+import Todo from "./modal"
+import TodoList from "./component/TodoList";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: React.FC = () => {
+  const [todos, setTodos] = useState<string>("")
+  const [todo, settodo] = useState<Todo[]>([])
+
+  const handleAdd = (e: any) => {
+    e.preventDefault()
+
+
+    if (todo) {
+      settodo([{ id: Date.now(), isDone: false, todos: todos }, ...todo,])
+      setTodos("")
+    }
+
+  }
+
+  console.log(todo)
+  return <div>
+    <Inputfiled todos={todos} setTodos={setTodos} handleAdd={handleAdd} />
+      <TodoList  todo={todo} settodo={settodo}/>
+  </div>;
+};
 
 export default App;
